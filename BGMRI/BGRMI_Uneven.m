@@ -48,7 +48,7 @@ if  sum(sum(Prior)) == 0 && sum(sum(Transcription_Factors)) ==0
   
    Prior = 0.5*(ones(No_of_Genes)-eye(No_of_Genes));
   
-elseif sum(sum(Transcription_Factors)) ~= 0 && sum(sum(Prior)) ==0
+    elseif sum(sum(Transcription_Factors)) ~= 0 && sum(sum(Prior)) ==0
     
     No_TFs = length(Transcription_Factors);
    Prior = 0.5*(ones(No_of_Genes, No_TFs)-eye(No_of_Genes,No_TFs));
@@ -84,16 +84,12 @@ end
 
 if Transcription_Factors == 0
 
-Queue = 1:No_of_Genes;
-Queue = repmat(Queue,No_of_Genes,1);
-TriUpper = triu(Queue,1);
-TriLower = tril(Queue,-1);
-TriUpper = TriUpper(:,2:end);
-TriLower = TriLower(:,1:end-1);
-K = TriUpper+TriLower;
+K =  1:No_of_Genes;
 
-
-else K = Transcription_Factors;
+else 
+    
+    K = Transcription_Factors;
+    
 
 end
 
@@ -104,6 +100,7 @@ end
  Mean_mRNA_to = repmat(Mean_mRNA_to, size(mRNA_to,1),1);
  mRNA_to = mRNA_to-Mean_mRNA_to;
  
- [~, B, Edges]= Occams_Model_Proposal_with_F_and_Steel_Bayes_with_Sorting_Berno(mRNA_to, dmRNA_dt, K, Prior);
+ 
+ [~, B, Edges]=  Occams_Model_Proposal_with_F_and_Steel_Sort_Berno_Predictors(mRNA_to, dmRNA_dt, K, Prior);
 
 
